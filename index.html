@@ -1137,7 +1137,7 @@ function calc(h){
   const prevClose = t ? t.prevClose : null;
   const todayPL = (prevClose!=null && isFinite(prevClose)) ? (price - prevClose)*h.qty : null;
   const dps = (h.code && divMap[h.code] && divMap[h.code].dps!=null) ? divMap[h.code].dps : null;
-  const annual = dps!=null ? dps*h.qty : cb*h.div;   // 优先公告每股分红×股数，否则成本×手填股息率
+  const annual = dps!=null ? dps*h.qty : cb*(h.div||0);   // 优先公告每股分红×股数，否则成本×手填股息率（无股息率按 0，避免 NaN）
   const expY = cb? annual/cb : 0;                    // 预期股息率(成本口径)=年化分红/成本市值=每股分红/成本价
   return {mv,cb,pl,diff,annual,dps,expY,todayPL};
 }
@@ -1392,7 +1392,7 @@ function renderDivBar(){
   const el=$("#divBar"); if(!el) return;
   const rows=holdings.map(h=>{
     const dv=divMap[h.code]; const dps=(dv&&dv.dps!=null)?dv.dps:null;
-    const annual=dps!=null? dps*h.qty : (h.cost*h.qty)*h.div;
+    const annual=dps!=null? dps*h.qty : (h.cost*h.qty)*(h.div||0);
     return {name:h.name, annual};
   }).filter(r=>r.annual>0).sort((a,b)=>b.annual-a.annual);
   if(!rows.length){ el.innerHTML='<div class="empty">暂无分红数据</div>'; return; }
