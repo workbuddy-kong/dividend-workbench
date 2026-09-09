@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>持仓分析看板 · 20年视角</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+background:#F7F6F3;color:#2C2C2A;line-height:1.6;padding:20px 16px 60px}
+.wrap{max-width:860px;margin:0 auto}
+h1{font-size:20px;font-weight:500;margin-bottom:4px}
+.sub{font-size:13px;color:#5F5E5A;margin-bottom:24px}
+h2{font-size:15px;font-weight:500;margin:28px 0 6px}
+.note{font-size:12px;color:#5F5E5A;margin-bottom:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:14px}
+.card{background:#fff;border:0.5px solid rgba(0,0,0,.12);border-radius:12px;padding:14px 16px}
+.lbl{font-size:13px;color:#5F5E5A}
+.num{font-size:24px;font-weight:500;margin-top:2px}
+.pos{color:#0F6E56}.neg{color:#A32D2D}
+.box{background:#fff;border:0.5px solid rgba(0,0,0,.12);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+.chart{position:relative;width:100%}
+.lg{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:#5F5E5A;margin-bottom:8px}
+.lg span{display:flex;align-items:center;gap:5px}
+.sw{width:10px;height:10px;border-radius:2px;display:inline-block}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:7px 8px;text-align:right;border-bottom:0.5px solid rgba(0,0,0,.08)}
+th:first-child,td:first-child{text-align:left}
+th{color:#5F5E5A;font-weight:500}
+.foot{margin-top:28px;font-size:12px;color:#888780;border-top:0.5px solid rgba(0,0,0,.1);padding-top:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>持仓分析看板 · 20年以上持有视角</h1>
+<div class="sub">红利组合 7 只标的 · 数据截至 2026-09-09 · 基于公开数据，不构成投资建议</div>
+
+<div class="grid">
+<div class="card"><div class="lbl">总市值</div><div class="num">¥32.6万</div></div>
+<div class="card"><div class="lbl">浮盈</div><div class="num pos">+6.24%</div></div>
+<div class="card"><div class="lbl">年分红</div><div class="num">15,734</div></div>
+<div class="card"><div class="lbl">按成本股息率</div><div class="num">5.12%</div></div>
+</div>
+
+<h2>当前配置 vs 20年适配版建议</h2>
+<div class="lg">
+<span><i class="sw" style="background:#888780"></i>当前占比</span>
+<span><i class="sw" style="background:#1D9E75"></i>建议占比</span>
+</div>
+<div class="box"><div class="chart" style="height:400px"><canvas id="c1"></canvas></div></div>
+
+<h2>各标的股息率（按现价）</h2>
+<div class="lg">
+<span><i class="sw" style="background:#888780"></i>正常</span>
+<span><i class="sw" style="background:#E24B4A"></i>高股息来自股价下跌（五粮液浮亏22%）</span>
+</div>
+<div class="box"><div class="chart" style="height:280px"><canvas id="c2"></canvas></div></div>
+
+<h2>20年资产轨迹（分红全部再投）</h2>
+<div class="lg">
+<span><i class="sw" style="background:#888780"></i>悲观 分红年减1%</span>
+<span><i class="sw" style="background:#378ADD"></i>保守 年增2%</span>
+<span><i class="sw" style="background:#1D9E75"></i>中性 年增3%</span>
+<span><i class="sw" style="background:#EF9F27"></i>乐观 年增5%</span>
+</div>
+<div class="box"><div class="chart" style="height:300px"><canvas id="c3"></canvas></div></div>
+
+<div class="grid">
+<div class="card"><div class="lbl">中性 20年后</div><div class="num">147.1万</div></div>
+<div class="card"><div class="lbl">剔除通胀后购买力</div><div class="num">89.8万</div></div>
+<div class="card"><div class="lbl">悲观下限</div><div class="num">69.1万</div></div>
+<div class="card"><div class="lbl">20年累计分红</div><div class="num">42.3万</div></div>
+</div>
+
+<h2>四种做法的20年终值</h2>
+<div class="box"><div class="chart" style="height:280px"><canvas id="c4"></canvas></div></div>
+
+<h2>再平衡的盈亏，取决于五粮液未来</h2>
+<div class="note">绿色＝再平衡多赚；红色＝再平衡少赚。终值影响只有 ±3%，再平衡买的是「不用猜对」。</div>
+<div class="box"><div class="chart" style="height:280px"><canvas id="c5"></canvas></div></div>
+
+<h2>A策略（分红投回原标的）20年后股数膨胀</h2>
+<div class="note">分红不断投回衰退股，等于用分红买越来越不值钱的纸。</div>
+<div class="box"><div class="chart" style="height:400px"><canvas id="c6"></canvas></div></div>
+
+<h2>操作清单</h2>
+<div class="box">
+<table>
+<tr><th>动作</th><th>说明</th></tr>
+<tr><td>分红不投回原标的</td><td style="text-align:left">全部买低配的那只（现在是 ETF 和长江电力），只买不卖：零印花税、零佣金、不实现亏损</td></tr>
+<tr><td>五粮液不主动卖</td><td style="text-align:left">卖了实亏 1.2 万；从此不投一分钱，让它随组合长大自然稀释</td></tr>
+<tr><td>分红攒半年买一次</td><td style="text-align:left">7 只每年约 14 笔分红，逐笔买 20 年白扔约 1,400 元佣金；半年一次只要 200 元</td></tr>
+<tr><td>一年只看一次</td><td style="text-align:left">偏离超 5 个百分点再拉回；20年最大的敌人不是选错股，是拿不住</td></tr>
+<tr><td>红利税</td><td style="text-align:left">A股持股满 1 年红利税为 0；必须卖时优先卖持有最久的份额（先进先出）</td></tr>
+</table>
+</div>
+
+<div class="foot">分红长期增速为判断值而非预测值。五粮液基准假设 -2%/年。模型：单只年化回报 = 股息率 + 长期增速。</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const L=['长江电力','招商银行','中证红利ETF','中国移动','伊利股份','美的集团','五粮液'];
+const T={color:'#888780'}, G={display:false}, GR={color:'rgba(128,128,128,0.15)'};
+const fmt=v=>(v/10000).toFixed(0)+'万';
+const noLeg={legend:{display:false}};
+new Chart(c1,{type:'bar',data:{labels:L,datasets:[
+ {label:'当前',data:[23.2,18.9,12.7,11.9,9.7,10.5,13.1],backgroundColor:'#888780',borderRadius:3},
+ {label:'建议',data:[28,18,25,10,5,10,4],backgroundColor:'#1D9E75',borderRadius:3}]},
+ options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:noLeg,
+ scales:{x:{grid:GR,ticks:{...T,callback:v=>v+'%'},max:30},y:{grid:G,ticks:T}}}});
+new Chart(c2,{type:'bar',data:{labels:L,datasets:[{data:[3.57,4.92,4.01,4.84,5.22,5.00,7.25],
+ backgroundColor:['#888780','#888780','#888780','#888780','#888780','#888780','#E24B4A'],borderRadius:3}]},
+ options:{responsive:true,maintainAspectRatio:false,plugins:noLeg,
+ scales:{x:{grid:G,ticks:{...T,autoSkip:false,maxRotation:45}},y:{grid:GR,ticks:{...T,callback:v=>v+'%'},beginAtZero:true}}}});
+new Chart(c3,{type:'line',data:{labels:[0,5,10,15,20],datasets:[
+ {label:'悲观',data:[326258,393520,474648,572501,690529],borderColor:'#888780',borderWidth:2,tension:.3,pointRadius:3,borderDash:[5,3]},
+ {label:'保守',data:[326258,453758,631084,877707,1220710],borderColor:'#378ADD',borderWidth:2,tension:.3,pointRadius:3},
+ {label:'中性',data:[326258,475398,692715,1009372,1470780],borderColor:'#1D9E75',borderWidth:2.5,tension:.3,pointRadius:3},
+ {label:'乐观',data:[326258,521157,832483,1329789,2124173],borderColor:'#EF9F27',borderWidth:2,tension:.3,pointRadius:3}]},
+ options:{responsive:true,maintainAspectRatio:false,plugins:noLeg,
+ scales:{x:{grid:G,ticks:{...T,callback:v=>v+'年'}},y:{grid:GR,ticks:{...T,callback:fmt},beginAtZero:true}}}});
+new Chart(c4,{type:'bar',data:{labels:['A 投回原标的','B 按目标再投','C 先调仓再投','D 每年再平衡'],
+ datasets:[{data:[1087901,1097906,1113842,1108401],backgroundColor:['#B4B2A9','#1D9E75','#378ADD','#EF9F27'],borderRadius:4}]},
+ options:{responsive:true,maintainAspectRatio:false,plugins:noLeg,
+ scales:{x:{grid:G,ticks:{...T,autoSkip:false,maxRotation:20}},y:{grid:GR,ticks:{...T,callback:fmt},min:1000000}}}});
+new Chart(c5,{type:'bar',data:{labels:['五粮液 +2%/年','0%','-2%','-5%','-8%'],
+ datasets:[{data:[-40155,-9323,10005,24922,29759],backgroundColor:['#E24B4A','#E24B4A','#1D9E75','#1D9E75','#1D9E75'],borderRadius:3}]},
+ options:{responsive:true,maintainAspectRatio:false,plugins:noLeg,
+ scales:{x:{grid:G,ticks:{...T,autoSkip:false}},y:{grid:GR,ticks:{...T,callback:v=>(v/10000).toFixed(1)+'万'},min:-50000,max:40000}}}});
+new Chart(c6,{type:'bar',data:{labels:L,datasets:[{data:[2.0,2.6,2.2,2.6,2.8,2.6,4.2],
+ backgroundColor:['#888780','#888780','#888780','#888780','#888780','#888780','#E24B4A'],borderRadius:3}]},
+ options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:noLeg,
+ scales:{x:{grid:GR,ticks:{...T,callback:v=>v+'x'},max:4.6},y:{grid:G,ticks:T}}}});
+</script>
+</body>
+</html>
